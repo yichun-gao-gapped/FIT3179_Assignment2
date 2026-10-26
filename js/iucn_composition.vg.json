@@ -1,0 +1,136 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": 760,
+  "height": 330,
+
+  "title": {
+    "text": "What Kind of Protection Dominates Australia?",
+    "subtitle": "Share of the National Reserve System by IUCN management category",
+    "anchor": "start",
+    "fontSize": 22,
+    "subtitleFontSize": 13,
+    "subtitleColor": "#666666"
+  },
+
+  "data": {
+    "url": "data/processed/iucn_summary.csv"
+  },
+
+  "encoding": {
+    "y": {
+      "field": "IUCN",
+      "type": "ordinal",
+      "sort": "-x",
+      "title": null,
+      "axis": {
+        "labelFontSize": 13
+      }
+    },
+
+    "x": {
+      "field": "NRSPercent",
+      "type": "quantitative",
+      "title": "Contribution to National Reserve System (%)",
+      "scale": {
+        "domain": [0, 62]
+      },
+      "axis": {
+        "grid": true,
+        "tickCount": 7
+      }
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 3,
+        "color": "#B9C7BB"
+      },
+
+      "encoding": {
+        "x": {
+          "datum": 0
+        },
+
+        "x2": {
+          "field": "NRSPercent"
+        }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 170
+      },
+
+      "encoding": {
+        "color": {
+          "condition": {
+            "test": "datum.IUCN == 'VI'",
+            "value": "#294D3A"
+          },
+          "value": "#7FA087"
+        },
+
+        "tooltip": [
+          {
+            "field": "IUCN",
+            "type": "nominal",
+            "title": "IUCN category"
+          },
+          {
+            "field": "NRSPercent",
+            "type": "quantitative",
+            "title": "Share of NRS (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "Area_ha",
+            "type": "quantitative",
+            "title": "Protected area (ha)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 10,
+        "fontSize": 12,
+        "fontWeight": "bold",
+        "color": "#444444"
+      },
+
+      "encoding": {
+        "text": {
+          "field": "NRSPercent",
+          "type": "quantitative",
+          "format": ".1f"
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "background": "#F8F6F0",
+
+    "view": {
+      "stroke": null
+    },
+
+    "axis": {
+      "labelColor": "#555555",
+      "titleColor": "#444444",
+      "gridColor": "#E1DED5"
+    }
+  }
+}
