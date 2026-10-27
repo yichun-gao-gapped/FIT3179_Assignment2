@@ -1,0 +1,214 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 560,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#F8F6F0",
+
+  "title": {
+    "text": "What Types of Protection Exist in the Gaps?",
+    "subtitle": "Management-category coverage within mainland and Tasmanian bioregions below 10% protected",
+    "anchor": "start",
+    "font": "Georgia",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666666"
+  },
+
+  "data": {
+    "url": "data/processed/ibra_iucn_underprotected.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Category_Area_ha": "number",
+        "Category_Percent_of_Region": "number",
+        "Total_Protected_Percent": "number"
+      }
+    }
+  },
+
+  "transform": [
+    {
+      "calculate": "datum.IUCN_Category == 'Ia' ? 'Strict reserve (Ia)' : datum.IUCN_Category == 'Ib' ? 'Wilderness (Ib)' : datum.IUCN_Category == 'II' ? 'National park (II)' : datum.IUCN_Category == 'III' ? 'Natural monument (III)' : datum.IUCN_Category == 'IV' ? 'Habitat management (IV)' : datum.IUCN_Category == 'V' ? 'Protected landscape (V)' : 'Sustainable use (VI)'",
+      "as": "IUCN_Label"
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#F8F6F0",
+        "strokeWidth": 1
+      },
+
+      "encoding": {
+        "x": {
+          "field": "IUCN_Label",
+          "type": "nominal",
+          "title": "Conservation management category",
+          "sort": [
+            "Strict reserve (Ia)",
+            "Wilderness (Ib)",
+            "National park (II)",
+            "Natural monument (III)",
+            "Habitat management (IV)",
+            "Protected landscape (V)",
+            "Sustainable use (VI)"
+          ],
+          "axis": {
+            "labelAngle": -35,
+            "labelAlign": "right",
+            "labelLimit": 170,
+            "titlePadding": 14
+          }
+        },
+
+        "y": {
+          "field": "IBRA_Name",
+          "type": "nominal",
+          "title": null,
+          "sort": {
+            "field": "Total_Protected_Percent",
+            "order": "ascending"
+          },
+          "axis": {
+            "labelLimit": 180
+          }
+        },
+
+        "color": {
+          "field": "Category_Percent_of_Region",
+          "type": "quantitative",
+          "title": "Share of bioregion (%)",
+          "scale": {
+            "domain": [0, 10],
+            "range": [
+              "#F1F3ED",
+              "#DCE7D9",
+              "#BDD3BD",
+              "#91B595",
+              "#5F8E6A",
+              "#2E5B43"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "title": "Share of bioregion (%)"
+          }
+        },
+
+        "tooltip": [
+          {
+            "field": "IBRA_Name",
+            "type": "nominal",
+            "title": "Bioregion"
+          },
+          {
+            "field": "IUCN_Label",
+            "type": "nominal",
+            "title": "Management category"
+          },
+          {
+            "field": "Category_Percent_of_Region",
+            "type": "quantitative",
+            "title": "Bioregion covered (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "Total_Protected_Percent",
+            "type": "quantitative",
+            "title": "Total protected (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+
+    {
+      "transform": [
+        {
+          "filter": "datum.Category_Percent_of_Region >= 1.8"
+        }
+      ],
+
+      "mark": {
+        "type": "text",
+        "font": "Arial",
+        "fontSize": 9,
+        "fontWeight": "bold",
+        "color": "#304235"
+      },
+
+      "encoding": {
+        "x": {
+          "field": "IUCN_Label",
+          "type": "nominal",
+          "sort": [
+            "Strict reserve (Ia)",
+            "Wilderness (Ib)",
+            "National park (II)",
+            "Natural monument (III)",
+            "Habitat management (IV)",
+            "Protected landscape (V)",
+            "Sustainable use (VI)"
+          ]
+        },
+
+        "y": {
+          "field": "IBRA_Name",
+          "type": "nominal",
+          "sort": {
+            "field": "Total_Protected_Percent",
+            "order": "ascending"
+          }
+        },
+
+        "text": {
+          "field": "Category_Percent_of_Region",
+          "type": "quantitative",
+          "format": ".1f"
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "font": "Arial",
+
+    "view": {
+      "stroke": null
+    },
+
+    "title": {
+      "font": "Georgia",
+      "subtitleFont": "Arial"
+    },
+
+    "axis": {
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 9,
+      "titleFontSize": 11,
+      "labelColor": "#555555",
+      "titleColor": "#444444"
+    },
+
+    "legend": {
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 10,
+      "titleFontSize": 11
+    }
+  }
+}

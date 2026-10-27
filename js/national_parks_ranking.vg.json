@@ -1,0 +1,191 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 350,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#F8F6F0",
+
+  "title": {
+    "text": "Australia's Largest National Parks",
+    "subtitle": "Ten largest records designated as National Park in the CAPAD spatial extract",
+    "anchor": "start",
+    "font": "Georgia",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "offset": 10
+  },
+
+  "data": {
+    "url": "data/processed/national_parks_top10.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "GIS_Area_ha": "number"
+      }
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "color": "#55745F",
+        "cornerRadiusEnd": 2
+      },
+
+      "encoding": {
+        "y": {
+          "field": "Name",
+          "type": "nominal",
+          "sort": [
+            "Munga-Thirri—Simpson Desert",
+            "Kati Thanda-Lake Eyre",
+            "Judbarra / Gregory",
+            "Karlamilyi",
+            "Munga-Thirri",
+            "Limmen",
+            "Witjira",
+            "Kosciuszko",
+            "Murray - Sunset",
+            "Alpine"
+          ],
+          "axis": {
+            "title": null,
+            "labelLimit": 220,
+            "labelFont": "Arial",
+            "labelFontSize": 10,
+            "labelColor": "#555555",
+            "domain": false,
+            "ticks": false
+          }
+        },
+
+        "x": {
+          "field": "GIS_Area_ha",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 4100000]
+          },
+          "axis": {
+            "title": "GIS area (ha)",
+            "format": "~s",
+            "grid": true,
+            "gridColor": "#E2DFD6",
+            "domain": false,
+            "ticks": false,
+            "labelFont": "Arial",
+            "titleFont": "Arial",
+            "labelFontSize": 10,
+            "titleFontSize": 11,
+            "labelColor": "#555555",
+            "titleColor": "#444444"
+          }
+        },
+
+        "tooltip": [
+          {
+            "field": "Name",
+            "type": "nominal",
+            "title": "National Park"
+          },
+          {
+            "field": "State",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "GIS_Area_ha",
+            "type": "quantitative",
+            "title": "GIS area (ha)",
+            "format": ",.0f"
+          },
+          {
+            "field": "IUCN",
+            "type": "nominal",
+            "title": "IUCN category"
+          }
+        ]
+      }
+    },
+
+    {
+      "transform": [
+        {
+          "calculate": "format(datum.GIS_Area_ha / 1000000, '.2f') + 'M'",
+          "as": "AreaMillion"
+        }
+      ],
+
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 6,
+        "font": "Arial",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#405947"
+      },
+
+      "encoding": {
+        "y": {
+          "field": "Name",
+          "type": "nominal",
+          "sort": [
+            "Munga-Thirri—Simpson Desert",
+            "Kati Thanda-Lake Eyre",
+            "Judbarra / Gregory",
+            "Karlamilyi",
+            "Munga-Thirri",
+            "Limmen",
+            "Witjira",
+            "Kosciuszko",
+            "Murray - Sunset",
+            "Alpine"
+          ]
+        },
+
+        "x": {
+          "field": "GIS_Area_ha",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 4100000]
+          }
+        },
+
+        "text": {
+          "field": "AreaMillion"
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "font": "Arial",
+
+    "view": {
+      "stroke": null
+    },
+
+    "title": {
+      "font": "Georgia",
+      "subtitleFont": "Arial"
+    },
+
+    "axis": {
+      "labelFont": "Arial",
+      "titleFont": "Arial"
+    }
+  }
+}

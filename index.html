@@ -1,45 +1,435 @@
-<body>
-  <main class="page-container">
+<!DOCTYPE html>
+<html lang="en">
 
-    <header class="page-header">
-      <h1>How Much of Australia Is Really Protected?</h1>
-      <p class="intro-text">
-        Exploring Australia's terrestrial protected areas using CAPAD 2024.
-      </p>
-    </header>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <section class="visualisation-section">
-      <div id="protected_areas_map"></div>
-      <p class="figure-insight">
-        Protected areas are densely clustered along Australia's east, south-east and
-        south-west coasts, while some of the largest reserves are found across the interior.
-      </p>
-    </section>
-
-    <section class="visualisation-section">
-      <div id="state_protection_map"></div>
-      <p class="figure-insight">
-        Protection is highly uneven across Australia. The ACT and Tasmania protect the largest
-        shares of their land, while Queensland and New South Wales remain close to or below 10%.
-      </p>
-    </section>
-
-    <section class="visualisation-section">
-
-  <div id="iucn_composition"></div>
-
-  <p class="figure-insight">
-    <strong>Category VI dominates Australia's protected-area network.</strong>
-    It contributes about 57.6% of the National Reserve System, more than twice
-    the share of Category II, the second-largest category.
-  </p>
-
-</section>
-
-  </main>
+  <title>How Much of Australia Is Really Protected?</title>
 
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <main class="page-container">
+
+    <header class="page-header">
+
+      <h1>How Much of Australia Is Really Protected?</h1>
+
+      <p class="intro-text">
+        Australia protects more than one-fifth of its terrestrial environment.
+        But a single national percentage cannot tell us where that protection lies,
+        what kinds of landscapes it covers, or whether Australia's ecosystems are
+        represented equally.
+      </p>
+
+      <p class="figure-source">
+        Data snapshot: Unless otherwise stated, CAPAD-based figures refer to
+        30 June 2024.
+      </p>
+
+    </header>
+
+
+    <section class="visualisation-section">
+      <div id="national_protection_waffle"></div>
+      <p class="figure-insight">
+        <strong>At first glance, 22.57% sounds reassuring.</strong>
+        In 2024, just over 22 hectares in every 100 were formally protected.
+        But this national figure alone cannot tell us where that protection is,
+        what it protects, or how evenly it represents Australia's ecosystems.
+        The partially filled square preserves the exact 22.57% rather than
+        rounding the result to 23%.
+      </p>
+
+      <p class="figure-source">
+        Source: CAPAD 2024, Australian Government Department of Climate Change,
+        Energy, the Environment and Water.
+      </p>
+
+    </section>
+
+
+
+    <section class="story-section">
+      <p class="section-number">01</p>
+      <h2>Where Is Australia Protected?</h2>
+      <p class="section-intro">
+        <strong>The first complication appears on the map.</strong>
+        Australia's 22.57% is not spread evenly across the continent.
+        Protection changes dramatically depending on whether we look at
+        individual reserves, state borders or ecological regions.
+      </p>
+
+    </section>
+ 
+
+    <section class="visualisation-section">
+      <div id="protected_areas_map"></div>
+      <p class="figure-insight">
+        <strong>Protected land forms a highly uneven national pattern.</strong>
+        Thousands of protected areas appear across Australia, but the largest
+        reserves are concentrated in particular landscapes. Many smaller areas
+        cluster along the east, south-east and south-west, while several enormous
+        reserves dominate parts of the interior.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="state_protection_map"></div>
+      <p class="figure-insight">
+        <strong>State borders reveal an even sharper contrast.</strong>
+        The ACT and Tasmania protect relatively large shares of their land,
+        while Queensland and New South Wales protect much smaller proportions.
+        A national percentage therefore describes no single Australian experience.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="state_protection_bullet"></div>
+      <p class="figure-insight">
+        <strong>Only five of the eight jurisdictions exceed the national protected share.</strong>
+        The ACT, Tasmania, Western Australia, South Australia and the Northern
+        Territory sit above Australia's 22.57% national figure, while Victoria,
+        New South Wales and Queensland remain below it. The same national total
+        is therefore built from very different regional outcomes.
+      </p>
+
+      <p class="figure-source">
+        Source: CAPAD 2024 terrestrial protected-area statistics.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="ibra_protection_map"></div>
+      <p class="figure-insight">
+        <strong>But administrative borders still do not tell the whole story.</strong>
+        IBRA bioregions are large natural regions that share similar climate,
+        geology, landforms, vegetation and species. Viewed through these
+        ecological rather than political boundaries, a different pattern emerges:
+        some bioregions are extensively protected, while neighbouring ecosystems
+        remain far less represented.
+      </p>
+
+      <p class="figure-source">
+        Source: DCCEEW Interim Biogeographic Regionalisation for Australia
+        (IBRA 7.1) and CAPAD 2024.
+      </p>
+
+    </section>
+
+
+    <section class="story-section">
+
+      <p class="section-number">02</p>
+      <h2>What Does Protection Look Like?</h2>
+      <p class="section-intro">
+        <strong>Location is only part of the story. “Protected” does not mean
+        the same thing everywhere.</strong>
+        IUCN management categories describe different conservation purposes,
+        ranging from strict nature protection to areas where conservation is
+        combined with sustainable use. Governance tells us who is responsible
+        for managing those landscapes.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="iucn_composition"></div>
+      <p class="figure-insight">
+        <strong>Australia's protected estate is not built around a single conservation model.</strong>
+        Category VI, which allows sustainable use alongside long-term conservation,
+        accounts for the largest share. National parks, shown as Category II,
+        form another major component, while stricter categories make up smaller
+        shares of the national system.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="governance_composition"></div>
+      <p class="figure-insight">
+        <strong>Nor is protection delivered by government alone.</strong>
+        Community governance, which includes Indigenous Protected Areas,
+        accounts for a major share of protected land alongside government,
+        joint and private arrangements. Australia's conservation network is
+        therefore also a network of different custodians.
+      </p>
+
+    </section>
+
+
+    <section class="story-section">
+
+      <p class="section-number">03</p>
+      <h2>Where Are the Ecological Gaps?</h2>
+      <p class="section-intro">
+        <strong>This is where the national percentage begins to break down.</strong>
+        DCCEEW reports protection levels across Australia's 89 IBRA bioregions
+        using a 10% threshold: 62 have more than 10% protected, while 27 remain
+        below 10%. We use the same reporting reference here to examine where
+        ecological representation remains weakest.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="underprotected_bioregions_map"></div>
+      <p class="figure-insight">
+        <strong>The gaps are scattered across the continent rather than confined to one region.</strong>
+        Bioregions below the 10% reporting reference appear across northern,
+        eastern, southern and inland Australia. Expanding the national total
+        alone would therefore not guarantee that these ecological gaps disappear.
+      </p>
+
+      <p class="figure-source">
+        Source: CAPAD 2024 and IBRA 7.1. The 10% threshold follows DCCEEW's
+        reporting of bioregion protection levels.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="ibra_iucn_heatmap"></div>
+      <p class="figure-insight">
+        <strong>Even underprotected bioregions are not underprotected in the same way.</strong>
+        Their mix of conservation categories differs substantially. Two regions
+        with similarly low overall protection can therefore contain very different
+        forms of protected land.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="protection_gap_ranking"></div>
+      <p class="figure-insight">
+        <strong>Some ecological gaps are far deeper than others.</strong>
+        Sturt Plateau sits below 1% protected, while several other mainland and
+        Tasmanian bioregions remain well below the 10% reporting reference.
+        Ranking these shortfalls shows where additional protection could most
+        directly improve ecological representation.
+      </p>
+
+      <p class="figure-source">
+        Derived from CAPAD 2024 protected-area data and IBRA 7.1 bioregion areas.
+        The 10% reference follows DCCEEW's reporting of bioregion protection levels.
+      </p>
+
+    </section>
+
+
+    <section class="story-section">
+
+      <p class="section-number">04</p>
+      <h2>How Is the Protected-Area Network Structured?</h2>
+      <p class="section-intro">
+        <strong>Even the word “reserve” hides enormous differences in scale.</strong>
+        Australia's protected-area network is built from thousands of small
+        records and a much smaller number of landscapes covering hundreds of
+        thousands or even millions of hectares.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="reserve_size_histogram"></div>
+      <p class="figure-insight">
+        <strong>Most recorded protected areas are small.</strong>
+        Of the 11,075 distinct protected-area records in this spatial extract,
+        approximately 53.6% cover less than 100 hectares. Yet at the opposite
+        extreme, a handful extend across millions of hectares. Australia's
+        protected-area network is therefore built from very different scales.
+      </p>
+
+      <p class="figure-source">
+        Source: DCCEEW CAPAD spatial service. Multipart records were grouped by
+        protected-area ID to avoid counting the same protected area more than once.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="governance_size_boxplot"></div>
+      <p class="figure-insight">
+        <strong>Who manages a reserve is also associated with the scale at which it operates.</strong>
+        Community-governed protected areas in this spatial extract tend to occur
+        at a much larger landscape scale, while government and private areas are
+        concentrated among smaller reserves. The box shows the middle 50% of
+        sizes, the white marker shows the median, and the whiskers show the
+        minimum and maximum values. A logarithmic scale is used because reserve
+        sizes span several orders of magnitude.
+      </p>
+
+      <p class="figure-source">
+        Source: DCCEEW CAPAD spatial service. Records were grouped by
+        protected-area ID before reserve-size distributions were calculated.
+      </p>
+
+    </section>
+
+
+    <section class="story-section">
+
+      <p class="section-number">05</p>
+      <h2>Does Scale Determine Protection?</h2>
+      <p class="section-intro">
+        <strong>A simple explanation would be that larger ecosystems receive more protection.
+        The data do not support that assumption.</strong>
+        Large and small bioregions appear at both high and low protection levels,
+        suggesting that physical scale alone cannot explain ecological representation.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="bioregion_size_protection"></div>
+      <p class="figure-insight">
+        <strong>Bigger does not mean better protected.</strong>
+        High and low protection levels occur across a wide range of bioregion
+        sizes. Some large ecosystems remain poorly represented, while others
+        achieve much higher protected shares. Size alone is clearly not the
+        deciding factor.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="national_parks_ranking"></div>
+      <p class="figure-insight">
+        <strong>Yet a few individual parks operate at an extraordinary scale.</strong>
+        Munga-Thirri—Simpson Desert covers about 3.61 million hectares in this
+        spatial extract, more than twice the next-largest record. A small number
+        of enormous parks can therefore make a substantial contribution to total
+        protected hectares without resolving every ecological gap.
+      </p>
+
+      <p class="figure-source">
+        Source: DCCEEW CAPAD spatial service. Ranking includes records designated
+        as National Park in this spatial extract.
+      </p>
+
+    </section>
+
+
+    <section class="story-section">
+      <p class="section-number">06</p>
+      <h2>Is Protected-Area Coverage Growing?</h2>
+
+      <p class="section-intro">
+        <strong>On one measure, the direction is clear: Australia is protecting more land.</strong>
+        Formal terrestrial protected-area coverage has expanded substantially
+        over the past two decades. But growth in area does not automatically
+        solve the geographic and ecological inequalities revealed above.
+      </p>
+
+    </section>
+
+
+    <section class="visualisation-section">
+      <div id="protection_distribution"></div>
+      <p class="figure-insight">
+        <strong>Formal protected-area coverage has more than doubled since 2004.</strong>
+        Coverage rose from 10.52% in 2004 to 22.57% in 2024, passing the former
+        17% Aichi benchmark. Australia's current 30 by 30 commitment aims for
+        30% of land to be protected or conserved by 2030. The challenge ahead
+        is therefore not only to increase the total, but to make that growth
+        ecologically meaningful.
+      </p>
+
+      <p class="figure-source">
+        Source: Australian Bureau of Statistics, Measuring What Matters –
+        Protected Areas; CAPAD; DCCEEW 30 by 30.
+      </p>
+
+    </section>
+
+
+    <section class="conclusion-section">
+
+      <p class="section-number">THE BIG PICTURE</p>
+      <h2>More Than a Percentage</h2>
+      <p>
+        Australia protects a substantial and growing share of its terrestrial
+        environment. At first glance, 22.57% offers a simple answer to the
+        question of how much land is protected.
+      </p>
+
+      <p>
+        But the deeper we look, the less simple that number becomes.
+        Protection is distributed unevenly between jurisdictions and ecological
+        regions, varies in management purpose and governance, and is shaped by
+        thousands of small reserves alongside a handful of enormous landscapes.
+        Some ecosystems remain poorly represented even while others are
+        extensively protected.
+      </p>
+
+      <p class="conclusion-highlight">
+        The real measure of protection is therefore not only how much land
+        Australia sets aside, but whether that protection reaches the ecosystems
+        and landscapes that need it.
+      </p>
+
+    </section>
+
+
+    <footer class="page-footer">
+      <h2>Data Sources</h2>
+      <p>
+        <a href="https://www.dcceew.gov.au/environment/land/nrs/science/capad/2024"
+           target="_blank">
+          Collaborative Australian Protected Areas Database (CAPAD) 2024
+        </a>
+      </p>
+
+      <p>
+        <a href="https://www.dcceew.gov.au/environment/land/nrs/science/ibra"
+           target="_blank">
+          Interim Biogeographic Regionalisation for Australia (IBRA)
+        </a>
+      </p>
+
+      <p>
+        <a href="https://www.abs.gov.au/statistics/measuring-what-matters/measuring-what-matters-themes-and-indicators/sustainable/protected-areas"
+           target="_blank">
+          Australian Bureau of Statistics – Measuring What Matters: Protected Areas
+        </a>
+      </p>
+
+      <p>
+        Author: Yichun Gao<br>
+      </p>
+
+      <p class="footer-note">
+        Visualisations created with Vega-Lite.
+      </p>
+
+    </footer>
+
+  </main>
+
   <script src="js/vega_lite_vis.js"></script>
+
 </body>
+
+</html>

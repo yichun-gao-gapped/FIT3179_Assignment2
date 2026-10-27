@@ -1,0 +1,197 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 500,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "title": {
+    "text": "Where Are Australia's Protection Gaps?",
+    "subtitle": "Mainland and Tasmanian IBRA 7.1 bioregions with less than 10% protected",
+    "anchor": "start",
+    "fontSize": 20,
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666666"
+  },
+
+  "projection": {
+    "type": "equalEarth"
+  },
+
+  "layer": [
+    {
+      "data": {
+        "url": "data/processed/australia_states.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_50m_admin_1_states_provinces"
+        }
+      },
+
+      "mark": {
+        "type": "geoshape",
+        "fill": "#EEECE5",
+        "stroke": "#B8B4AA",
+        "strokeWidth": 0.8
+      }
+    },
+
+    {
+      "data": {
+        "url": "data/processed/ibra_points.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "LONGITUDE": "number",
+            "LATITUDE": "number"
+          }
+        }
+      },
+
+      "transform": [
+        {
+          "filter": "isValid(datum.LONGITUDE) && isValid(datum.LATITUDE)"
+        },
+
+        {
+          "lookup": "REG_CODE_7",
+          "from": {
+            "data": {
+              "url": "data/processed/ibra_bioregions_summary.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "Protected_Percent": "number",
+                  "Protected_Area_ha": "number",
+                  "IBRA_Area_ha": "number"
+                }
+              }
+            },
+            "key": "IBRA_Code",
+            "fields": [
+              "IBRA_Name",
+              "Jurisdictions",
+              "Protected_Percent",
+              "Protected_Area_ha",
+              "IBRA_Area_ha"
+            ]
+          }
+        },
+
+        {
+          "filter": "datum.Protected_Percent < 10"
+        },
+
+        {
+          "filter": "datum.REG_CODE_7 != 'COS' && datum.REG_CODE_7 != 'SAI'"
+        },
+
+        {
+          "calculate": "datum.Protected_Percent < 5 ? 'Below 5%' : '5–10%'",
+          "as": "GapLevel"
+        }
+      ],
+
+      "mark": {
+        "type": "circle",
+        "size": 145,
+        "opacity": 0.9,
+        "stroke": "#FFFFFF",
+        "strokeWidth": 1.3
+      },
+
+      "encoding": {
+        "longitude": {
+          "field": "LONGITUDE",
+          "type": "quantitative"
+        },
+
+        "latitude": {
+          "field": "LATITUDE",
+          "type": "quantitative"
+        },
+
+        "color": {
+          "field": "GapLevel",
+          "type": "nominal",
+          "title": "Protected share",
+          "scale": {
+            "domain": [
+              "Below 5%",
+              "5–10%"
+            ],
+            "range": [
+              "#9B4A2F",
+              "#D69B63"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "title": "Protected share",
+            "symbolType": "circle",
+            "symbolSize": 110
+          }
+        },
+
+        "tooltip": [
+          {
+            "field": "IBRA_Name",
+            "type": "nominal",
+            "title": "IBRA Bioregion"
+          },
+          {
+            "field": "Jurisdictions",
+            "type": "nominal",
+            "title": "Jurisdiction(s)"
+          },
+          {
+            "field": "Protected_Percent",
+            "type": "quantitative",
+            "title": "Protected (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "Protected_Area_ha",
+            "type": "quantitative",
+            "title": "Protected area (ha)",
+            "format": ",.0f"
+          },
+          {
+            "field": "IBRA_Area_ha",
+            "type": "quantitative",
+            "title": "Bioregion area (ha)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    }
+  ],
+
+  "config": {
+    "background": "#F8F6F0",
+
+    "view": {
+      "stroke": null
+    },
+
+    "legend": {
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "titleColor": "#333333",
+      "labelColor": "#555555",
+      "labelFont": "Arial",
+      "titleFont": "Arial"
+    },
+
+    "title": {
+      "font": "Arial",
+      "subtitleFont": "Arial"
+    }
+  }
+}

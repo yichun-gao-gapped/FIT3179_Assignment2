@@ -1,0 +1,255 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 400,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "title": {
+    "text": "Does Bioregion Size Determine Protection?",
+    "subtitle": "Mainland and Tasmanian IBRA 7.1 bioregions; bubble size shows protected area",
+    "anchor": "start",
+    "font": "Georgia",
+    "fontSize": 20,
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666666"
+  },
+
+  "data": {
+    "url": "data/processed/ibra_bioregions_summary.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "IBRA_Area_ha": "number",
+        "Protected_Area_ha": "number",
+        "Protected_Percent": "number"
+      }
+    }
+  },
+
+  "transform": [
+    {
+      "filter": "datum.IBRA_Code != 'COS' && datum.IBRA_Code != 'SAI'"
+    },
+    {
+      "filter": "datum.IBRA_Area_ha > 0"
+    },
+    {
+      "calculate": "datum.Protected_Percent < 10 ? 'Below 10%' : datum.Protected_Percent < 30 ? '10–30%' : '30%+'",
+      "as": "Protection_Band"
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "filled": true,
+        "opacity": 0.78,
+        "stroke": "#FFFFFF",
+        "strokeWidth": 0.8
+      },
+
+      "encoding": {
+        "x": {
+          "field": "IBRA_Area_ha",
+          "type": "quantitative",
+          "title": "Bioregion area (ha, log scale)",
+          "scale": {
+            "type": "log"
+          },
+          "axis": {
+            "format": "~s",
+            "grid": true
+          }
+        },
+
+        "y": {
+          "field": "Protected_Percent",
+          "type": "quantitative",
+          "title": "Protected share (%)",
+          "scale": {
+            "domain": [0, 90]
+          },
+          "axis": {
+            "grid": true
+          }
+        },
+
+        "size": {
+          "field": "Protected_Area_ha",
+          "type": "quantitative",
+          "title": "Protected area (ha)",
+          "scale": {
+            "range": [20, 500]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "title": "Protected area (ha)",
+            "format": ".2s"
+          }
+        },
+
+        "color": {
+          "field": "Protection_Band",
+          "type": "nominal",
+          "title": "Protection level",
+
+          "scale": {
+            "domain": [
+              "Below 10%",
+              "10–30%",
+              "30%+"
+            ],
+
+            "range": [
+              "#B7673C",
+              "#A9B88E",
+              "#416B52"
+            ]
+          },
+
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
+            "title": "Protection level"
+          }
+        },
+
+        "tooltip": [
+          {
+            "field": "IBRA_Name",
+            "type": "nominal",
+            "title": "Bioregion"
+          },
+          {
+            "field": "Jurisdictions",
+            "type": "nominal",
+            "title": "Jurisdiction(s)"
+          },
+          {
+            "field": "IBRA_Area_ha",
+            "type": "quantitative",
+            "title": "Bioregion area (ha)",
+            "format": ",.0f"
+          },
+          {
+            "field": "Protected_Area_ha",
+            "type": "quantitative",
+            "title": "Protected area (ha)",
+            "format": ",.0f"
+          },
+          {
+            "field": "Protected_Percent",
+            "type": "quantitative",
+            "title": "Protected (%)",
+            "format": ".1f"
+          }
+        ]
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {
+            "Benchmark": 10
+          }
+        ]
+      },
+
+      "mark": {
+        "type": "rule",
+        "strokeDash": [6, 5],
+        "strokeWidth": 1.5,
+        "color": "#A46B4D"
+      },
+
+      "encoding": {
+        "y": {
+          "field": "Benchmark",
+          "type": "quantitative"
+        }
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {
+            "x": 80000000,
+            "y": 11,
+            "Label": "10% IBRA reporting reference"
+          }
+        ]
+      },
+
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "bottom",
+        "font": "Arial",
+        "fontSize": 9,
+        "fontWeight": "bold",
+        "color": "#A46B4D"
+      },
+
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+
+        "y": {
+          "field": "y",
+          "type": "quantitative"
+        },
+
+        "text": {
+          "field": "Label"
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "font": "Arial",
+
+    "background": "#F8F6F0",
+
+    "view": {
+      "stroke": null
+    },
+
+    "title": {
+      "font": "Georgia",
+      "subtitleFont": "Arial"
+    },
+
+    "axis": {
+      "gridColor": "#E2DFD6",
+      "domain": false,
+      "tickColor": "#BBBBBB",
+      "labelColor": "#555555",
+      "titleColor": "#444444",
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 10,
+      "titleFontSize": 11
+    },
+
+    "legend": {
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 10,
+      "titleFontSize": 11
+    }
+  }
+}

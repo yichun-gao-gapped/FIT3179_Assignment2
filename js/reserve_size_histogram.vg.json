@@ -1,0 +1,130 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 300,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#f5f3ee",
+
+  "title": {
+    "text": "Most Protected-Area Records Are Relatively Small",
+    "subtitle": "Distribution of consolidated protected-area records by GIS area",
+    "anchor": "start",
+    "font": "Arial",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "offset": 10
+  },
+
+  "data": {
+    "url": "data/processed/reserve_size_distribution.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Count": "number",
+        "BinStartLog": "number",
+        "BinEndLog": "number"
+      }
+    }
+  },
+
+  "mark": {
+    "type": "bar",
+    "color": "#55745f",
+    "stroke": "#f5f3ee",
+    "strokeWidth": 1
+  },
+
+  "encoding": {
+    "x": {
+      "field": "BinStartLog",
+      "type": "quantitative",
+      "scale": {
+        "domain": [-4, 8]
+      },
+      "axis": {
+        "title": "GIS area (ha), powers of ten",
+        "values": [
+          -4,
+          -2,
+          0,
+          2,
+          4,
+          6,
+          8
+        ],
+        "labelExpr": "datum.value == -4 ? '0.0001' : datum.value == -2 ? '0.01' : datum.value == 0 ? '1' : datum.value == 2 ? '100' : datum.value == 4 ? '10k' : datum.value == 6 ? '1M' : '100M'",
+        "grid": false
+      }
+    },
+
+    "x2": {
+      "field": "BinEndLog"
+    },
+
+    "y": {
+      "field": "Count",
+      "type": "quantitative",
+      "scale": {
+        "domainMin": 0,
+        "nice": true
+      },
+      "axis": {
+        "title": "Number of protected-area records",
+        "grid": true,
+        "gridColor": "#dedbd3",
+        "gridOpacity": 0.8,
+        "domain": false,
+        "ticks": false
+      }
+    },
+
+    "y2": {
+      "datum": 0
+    },
+
+    "tooltip": [
+      {
+        "field": "SizeRange",
+        "type": "nominal",
+        "title": "GIS area range"
+      },
+      {
+        "field": "Count",
+        "type": "quantitative",
+        "title": "Records",
+        "format": ","
+      }
+    ]
+  },
+
+  "config": {
+    "view": {
+      "stroke": null
+    },
+
+    "axis": {
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "labelColor": "#666666",
+      "titleColor": "#555555"
+    },
+
+    "title": {
+      "font": "Arial",
+      "subtitleFont": "Arial"
+    }
+  }
+}

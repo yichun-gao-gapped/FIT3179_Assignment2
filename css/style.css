@@ -1,52 +1,213 @@
 body {
-  margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: #f5f5f5;
+  margin: 0;
+  background-color: #ffffff;
   color: #222222;
 }
 
 .page-container {
-  max-width: 1200px;
+  width: 100%;
+  max-width: 1100px;
+  box-sizing: border-box;
   margin: 0 auto;
-  padding: 24px 32px 80px;
+  padding: 40px;
 }
 
 .page-header {
-  margin-bottom: 40px;
+  max-width: 850px;
+  margin-bottom: 60px;
 }
 
 .page-header h1 {
-  margin: 0 0 18px 0;
-  font-size: 56px;
-  line-height: 1.1;
-  font-weight: 800;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 46px;
+  line-height: 1.05;
+  margin-top: 0;
+  margin-bottom: 14px;
+  color: #202820;
 }
 
 .intro-text {
-  margin: 0;
   font-size: 18px;
   line-height: 1.6;
-  color: #333333;
+  color: #5f665f;
+}
+
+.story-section {
+  max-width: 820px;
+  margin-top: 80px;
+  margin-bottom: 35px;
+  padding-top: 20px;
+  border-top: 1px solid #d9ddd7;
+}
+
+.section-number {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  color: #68806d;
+  margin-bottom: 8px;
+}
+
+.story-section h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 32px;
+  line-height: 1.15;
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #202820;
+}
+
+.section-intro {
+  font-size: 16px;
+  line-height: 1.65;
+  color: #555555;
 }
 
 .visualisation-section {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   margin-bottom: 70px;
+  overflow-x: visible;
 }
 
-#protected_areas_map,
-#state_protection_map {
-  max-width: 1100px;
-  margin: 0 auto;
+.visualisation-section > div {
+  width: 100%;
+  max-width: 100%;
 }
 
 .vega-embed {
+  display: block;
   width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.vega-embed > div {
+  width: 100%;
+  max-width: 100%;
+}
+
+.vega-embed canvas,
+.vega-embed svg {
+  max-width: 100%;
+  height: auto;
 }
 
 .figure-insight {
-  max-width: 1100px;
-  margin: 16px auto 0;
-  font-size: 15px;
+  max-width: 900px;
+  margin-top: 20px;
+  font-size: 16px;
+  line-height: 1.65;
+  color: #333333;
+}
+
+.figure-insight strong {
+  color: #202820;
+}
+
+.figure-source {
+  max-width: 900px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #e0e0e0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #777777;
+}
+
+.conclusion-section {
+  max-width: 820px;
+  box-sizing: border-box;
+  margin-top: 90px;
+  margin-bottom: 70px;
+  padding: 35px;
+  background-color: #f1f3ed;
+}
+
+.conclusion-section h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 32px;
+  margin-top: 0;
+  color: #202820;
+}
+
+.conclusion-section p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #444444;
+}
+
+.conclusion-highlight {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #cdd4ca;
+  font-size: 18px !important;
+  font-weight: bold;
+  color: #304235 !important;
+}
+
+.page-footer {
+  max-width: 850px;
+  margin-top: 60px;
+  padding-top: 25px;
+  border-top: 1px solid #d7dbd5;
+}
+
+.page-footer h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.page-footer p {
+  font-size: 13px;
   line-height: 1.6;
-  color: #555555;
+  color: #666666;
+}
+
+.page-footer a {
+  color: #55745f;
+}
+
+.footer-note {
+  font-size: 12px !important;
+  color: #888888 !important;
+}
+
+@media screen and (max-width: 900px) {
+  .page-container {
+    padding: 28px;
+  }
+
+  .page-header h1 {
+    font-size: 40px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .page-container {
+    padding: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 34px;
+  }
+
+  .story-section h2,
+  .conclusion-section h2 {
+    font-size: 27px;
+  }
+
+  .intro-text,
+  .section-intro,
+  .figure-insight {
+    font-size: 15px;
+  }
+
+  .conclusion-section {
+    padding: 24px;
+  }
 }

@@ -1,0 +1,181 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 300,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#f5f3ee",
+
+  "title": {
+    "text": "Which Jurisdictions Exceed Australia's National Protected Share?",
+    "subtitle": "State and territory protected-land shares compared with Australia's 22.57% national protected share",
+    "anchor": "start",
+    "font": "Arial",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666"
+  },
+
+  "data": {
+    "url": "data/processed/state_protection.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "ProtectedPercent": "number",
+        "ProtectedArea_ha": "number"
+      }
+    }
+  },
+
+  "transform": [
+    {
+      "calculate": "22.57",
+      "as": "NationalShare"
+    }
+  ],
+
+  "encoding": {
+    "y": {
+      "field": "STATE",
+      "type": "nominal",
+      "sort": {
+        "field": "ProtectedPercent",
+        "order": "descending"
+      },
+      "axis": {
+        "title": null,
+        "ticks": false,
+        "domain": false
+      }
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "color": "#dedfd9",
+        "height": 24
+      },
+
+      "encoding": {
+        "x": {
+          "datum": 60,
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 60]
+          },
+          "axis": {
+            "title": "Land protected (%)",
+            "values": [
+              0,
+              10,
+              20,
+              30,
+              40,
+              50,
+              60
+            ],
+            "grid": true,
+            "gridColor": "#e2e0da",
+            "domain": false,
+            "ticks": false
+          }
+        },
+
+        "x2": {
+          "datum": 0
+        }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "bar",
+        "color": "#55745f",
+        "height": 16
+      },
+
+      "encoding": {
+        "x": {
+          "field": "ProtectedPercent",
+          "type": "quantitative"
+        },
+
+        "x2": {
+          "datum": 0
+        },
+
+        "tooltip": [
+          {
+            "field": "StateName",
+            "type": "nominal",
+            "title": "State / Territory"
+          },
+          {
+            "field": "ProtectedPercent",
+            "type": "quantitative",
+            "title": "Protected land (%)",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+
+    {
+      "mark": {
+        "type": "tick",
+        "orient": "vertical",
+        "color": "#b77d5b",
+        "thickness": 3,
+        "size": 28
+      },
+
+      "encoding": {
+        "x": {
+          "field": "NationalShare",
+          "type": "quantitative"
+        }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 6,
+        "fontSize": 10,
+        "color": "#444444"
+      },
+
+      "encoding": {
+        "x": {
+          "field": "ProtectedPercent",
+          "type": "quantitative"
+        },
+
+        "text": {
+          "field": "ProtectedPercent",
+          "type": "quantitative",
+          "format": ".1f"
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

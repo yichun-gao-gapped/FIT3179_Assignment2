@@ -1,0 +1,239 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 350,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#f5f3ee",
+
+  "title": {
+    "text": "Who Manages Australia's Protected Land?",
+    "subtitle": "Share of protected area by governance type, CAPAD 2024",
+    "anchor": "start",
+    "font": "Arial",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "offset": 10
+  },
+
+  "data": {
+    "values": [
+      {
+        "Governance": "Community",
+        "Share": 49.49,
+        "Area_ha": 85858982,
+        "x0": 0,
+        "x1": 0.4949,
+        "y0": 0,
+        "y1": 1,
+        "xm": 0.24745,
+        "ym": 0.5
+      },
+      {
+        "Governance": "Government",
+        "Share": 38.34,
+        "Area_ha": 66509385,
+        "x0": 0.4949,
+        "x1": 1,
+        "y0": 0,
+        "y1": 0.7593,
+        "xm": 0.74745,
+        "ym": 0.37965
+      },
+      {
+        "Governance": "Joint",
+        "Share": 6.06,
+        "Area_ha": 10521598,
+        "x0": 0.4949,
+        "x1": 0.747,
+        "y0": 0.7593,
+        "y1": 1,
+        "xm": 0.62095,
+        "ym": 0.87965
+      },
+      {
+        "Governance": "Private",
+        "Share": 6.11,
+        "Area_ha": 10603502,
+        "x0": 0.747,
+        "x1": 1,
+        "y0": 0.7593,
+        "y1": 1,
+        "xm": 0.8735,
+        "ym": 0.87965
+      }
+    ]
+  },
+
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#f5f3ee",
+        "strokeWidth": 4
+      },
+
+      "encoding": {
+        "x": {
+          "field": "x0",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1]
+          },
+          "axis": null
+        },
+
+        "x2": {
+          "field": "x1"
+        },
+
+        "y": {
+          "field": "y0",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1]
+          },
+          "axis": null
+        },
+
+        "y2": {
+          "field": "y1"
+        },
+
+        "color": {
+          "field": "Governance",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Community",
+              "Government",
+              "Joint",
+              "Private"
+            ],
+            "range": [
+              "#55745f",
+              "#738b78",
+              "#b77d5b",
+              "#9da99f"
+            ]
+          },
+          "legend": null
+        },
+
+        "tooltip": [
+          {
+            "field": "Governance",
+            "type": "nominal",
+            "title": "Governance"
+          },
+          {
+            "field": "Share",
+            "type": "quantitative",
+            "title": "Share (%)",
+            "format": ".2f"
+          },
+          {
+            "field": "Area_ha",
+            "type": "quantitative",
+            "title": "Protected area (ha)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+
+    {
+      "mark": {
+        "type": "text",
+        "font": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 13,
+        "color": "#ffffff",
+        "dy": -9
+      },
+
+      "encoding": {
+        "x": {
+          "field": "xm",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1]
+          }
+        },
+
+        "y": {
+          "field": "ym",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1]
+          }
+        },
+
+        "text": {
+          "field": "Governance"
+        }
+      }
+    },
+
+    {
+      "transform": [
+        {
+          "calculate": "format(datum.Share, '.1f') + '%'",
+          "as": "Label"
+        }
+      ],
+
+      "mark": {
+        "type": "text",
+        "font": "Arial",
+        "fontWeight": "bold",
+        "fontSize": 14,
+        "color": "#ffffff",
+        "dy": 11
+      },
+
+      "encoding": {
+        "x": {
+          "field": "xm",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1]
+          }
+        },
+
+        "y": {
+          "field": "ym",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1]
+          }
+        },
+
+        "text": {
+          "field": "Label"
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "view": {
+      "stroke": null
+    },
+
+    "title": {
+      "font": "Arial",
+      "subtitleFont": "Arial"
+    }
+  }
+}

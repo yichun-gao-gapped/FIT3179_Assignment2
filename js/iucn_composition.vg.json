@@ -1,136 +1,232 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-  "width": 760,
-  "height": 330,
+  "width": "container",
+  "height": 320,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#F8F6F0",
 
   "title": {
     "text": "What Kind of Protection Dominates Australia?",
     "subtitle": "Share of the National Reserve System by IUCN management category",
     "anchor": "start",
-    "fontSize": 22,
-    "subtitleFontSize": 13,
-    "subtitleColor": "#666666"
+    "font": "Georgia",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "offset": 10
   },
 
   "data": {
-    "url": "data/processed/iucn_summary.csv"
-  },
-
-  "encoding": {
-    "y": {
-      "field": "IUCN",
-      "type": "ordinal",
-      "sort": "-x",
-      "title": null,
-      "axis": {
-        "labelFontSize": 13
-      }
-    },
-
-    "x": {
-      "field": "NRSPercent",
-      "type": "quantitative",
-      "title": "Contribution to National Reserve System (%)",
-      "scale": {
-        "domain": [0, 62]
+    "values": [
+      {
+        "Category": "Strict nature reserve (Ia)",
+        "Percent": 9.25
       },
-      "axis": {
-        "grid": true,
-        "tickCount": 7
+      {
+        "Category": "Wilderness area (Ib)",
+        "Percent": 2.16
+      },
+      {
+        "Category": "National park (II)",
+        "Percent": 22.80
+      },
+      {
+        "Category": "Natural monument (III)",
+        "Percent": 1.40
+      },
+      {
+        "Category": "Habitat/species management (IV)",
+        "Percent": 2.54
+      },
+      {
+        "Category": "Protected landscape (V)",
+        "Percent": 4.24
+      },
+      {
+        "Category": "Sustainable use (VI)",
+        "Percent": 57.59
       }
-    }
+    ]
   },
 
   "layer": [
     {
       "mark": {
         "type": "rule",
-        "strokeWidth": 3,
-        "color": "#B9C7BB"
+        "strokeWidth": 2,
+        "color": "#B8C2B8"
       },
 
       "encoding": {
+        "y": {
+          "field": "Category",
+          "type": "nominal",
+          "sort": [
+            "Strict nature reserve (Ia)",
+            "Wilderness area (Ib)",
+            "National park (II)",
+            "Natural monument (III)",
+            "Habitat/species management (IV)",
+            "Protected landscape (V)",
+            "Sustainable use (VI)"
+          ],
+          "axis": {
+            "title": null,
+            "domain": false,
+            "ticks": false,
+            "labelLimit": 230
+          }
+        },
+
         "x": {
-          "datum": 0
+          "field": "Percent",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 65]
+          },
+          "axis": {
+            "title": "Share of National Reserve System (%)",
+            "values": [0, 10, 20, 30, 40, 50, 60],
+            "grid": true,
+            "gridColor": "#E2DFD6",
+            "domain": false,
+            "ticks": false
+          }
         },
 
         "x2": {
-          "field": "NRSPercent"
+          "datum": 0
         }
       }
     },
 
     {
       "mark": {
-        "type": "point",
+        "type": "circle",
         "filled": true,
-        "size": 170
+        "size": 100,
+        "color": "#55745F",
+        "stroke": "#FFFFFF",
+        "strokeWidth": 1
       },
 
       "encoding": {
-        "color": {
-          "condition": {
-            "test": "datum.IUCN == 'VI'",
-            "value": "#294D3A"
-          },
-          "value": "#7FA087"
+        "y": {
+          "field": "Category",
+          "type": "nominal",
+          "sort": [
+            "Strict nature reserve (Ia)",
+            "Wilderness area (Ib)",
+            "National park (II)",
+            "Natural monument (III)",
+            "Habitat/species management (IV)",
+            "Protected landscape (V)",
+            "Sustainable use (VI)"
+          ]
+        },
+
+        "x": {
+          "field": "Percent",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 65]
+          }
         },
 
         "tooltip": [
           {
-            "field": "IUCN",
+            "field": "Category",
             "type": "nominal",
-            "title": "IUCN category"
+            "title": "Management category"
           },
           {
-            "field": "NRSPercent",
+            "field": "Percent",
             "type": "quantitative",
-            "title": "Share of NRS (%)",
-            "format": ".1f"
-          },
-          {
-            "field": "Area_ha",
-            "type": "quantitative",
-            "title": "Protected area (ha)",
-            "format": ",.0f"
+            "title": "Share (%)",
+            "format": ".2f"
           }
         ]
       }
     },
 
     {
+      "transform": [
+        {
+          "calculate": "format(datum.Percent, '.1f') + '%'",
+          "as": "Label"
+        }
+      ],
+
       "mark": {
         "type": "text",
         "align": "left",
         "baseline": "middle",
-        "dx": 10,
-        "fontSize": 12,
+        "dx": 8,
+        "font": "Arial",
+        "fontSize": 11,
         "fontWeight": "bold",
-        "color": "#444444"
+        "color": "#405947"
       },
 
       "encoding": {
-        "text": {
-          "field": "NRSPercent",
+        "y": {
+          "field": "Category",
+          "type": "nominal",
+          "sort": [
+            "Strict nature reserve (Ia)",
+            "Wilderness area (Ib)",
+            "National park (II)",
+            "Natural monument (III)",
+            "Habitat/species management (IV)",
+            "Protected landscape (V)",
+            "Sustainable use (VI)"
+          ]
+        },
+
+        "x": {
+          "field": "Percent",
           "type": "quantitative",
-          "format": ".1f"
+          "scale": {
+            "domain": [0, 65]
+          }
+        },
+
+        "text": {
+          "field": "Label"
         }
       }
     }
   ],
 
   "config": {
-    "background": "#F8F6F0",
+    "font": "Arial",
 
     "view": {
       "stroke": null
     },
 
+    "title": {
+      "font": "Georgia",
+      "subtitleFont": "Arial"
+    },
+
     "axis": {
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 10,
+      "titleFontSize": 11,
       "labelColor": "#555555",
-      "titleColor": "#444444",
-      "gridColor": "#E1DED5"
+      "titleColor": "#444444"
     }
   }
 }

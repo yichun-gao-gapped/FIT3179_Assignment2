@@ -1,0 +1,317 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 300,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#f5f3ee",
+
+  "title": {
+    "text": "Protected-Area Coverage Has More Than Doubled",
+    "subtitle": "Australia's formal terrestrial protected-area coverage, 2004–2024",
+    "anchor": "start",
+    "font": "Arial",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666",
+    "offset": 10
+  },
+
+  "data": {
+    "url": "data/processed/protection_trend.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Year": "number",
+        "ProtectedPercent": "number"
+      }
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {
+        "type": "line",
+        "color": "#55745f",
+        "strokeWidth": 3
+      },
+
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative",
+          "scale": {
+            "domain": [2004, 2030]
+          },
+          "axis": {
+            "title": "Year",
+            "values": [
+              2004,
+              2008,
+              2012,
+              2016,
+              2020,
+              2024,
+              2030
+            ],
+            "format": "d",
+            "grid": false,
+            "domain": false,
+            "ticks": false
+          }
+        },
+
+        "y": {
+          "field": "ProtectedPercent",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 32]
+          },
+          "axis": {
+            "title": "Terrestrial protected area (%)",
+            "values": [
+              0,
+              5,
+              10,
+              15,
+              20,
+              25,
+              30
+            ],
+            "grid": true,
+            "gridColor": "#dedbd3",
+            "gridOpacity": 0.8,
+            "domain": false,
+            "ticks": false
+          }
+        }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "color": "#55745f",
+        "size": 65
+      },
+
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative"
+        },
+
+        "y": {
+          "field": "ProtectedPercent",
+          "type": "quantitative"
+        },
+
+        "tooltip": [
+          {
+            "field": "Year",
+            "type": "quantitative",
+            "title": "Year",
+            "format": "d"
+          },
+          {
+            "field": "ProtectedPercent",
+            "type": "quantitative",
+            "title": "Protected area (%)",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {
+            "Target": 17
+          }
+        ]
+      },
+
+      "mark": {
+        "type": "rule",
+        "color": "#b77d5b",
+        "strokeWidth": 1.5,
+        "strokeDash": [6, 4]
+      },
+
+      "encoding": {
+        "y": {
+          "field": "Target",
+          "type": "quantitative"
+        }
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {
+            "Year": 2005,
+            "Target": 17.4,
+            "Label": "17% Aichi target"
+          }
+        ]
+      },
+
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "bottom",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#9b6749"
+      },
+
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative"
+        },
+
+        "y": {
+          "field": "Target",
+          "type": "quantitative"
+        },
+
+        "text": {
+          "field": "Label"
+        }
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {
+            "Target": 30
+          }
+        ]
+      },
+
+      "mark": {
+        "type": "rule",
+        "color": "#55745f",
+        "strokeWidth": 1.5,
+        "strokeDash": [3, 3]
+      },
+
+      "encoding": {
+        "y": {
+          "field": "Target",
+          "type": "quantitative"
+        }
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {
+            "Year": 2029.2,
+            "Target": 30.4,
+            "Label": "2030 target: 30% protected or conserved"
+          }
+        ]
+      },
+
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "bottom",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#55745f"
+      },
+
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative"
+        },
+
+        "y": {
+          "field": "Target",
+          "type": "quantitative"
+        },
+
+        "text": {
+          "field": "Label"
+        }
+      }
+    },
+
+    {
+      "transform": [
+        {
+          "filter": "datum.Year == 2024"
+        },
+        {
+          "calculate": "format(datum.ProtectedPercent, '.2f') + '%'",
+          "as": "Label"
+        }
+      ],
+
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 8,
+        "dy": -10,
+        "fontSize": 11,
+        "fontWeight": "bold",
+        "color": "#405947"
+      },
+
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "quantitative"
+        },
+
+        "y": {
+          "field": "ProtectedPercent",
+          "type": "quantitative"
+        },
+
+        "text": {
+          "field": "Label"
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "view": {
+      "stroke": null
+    },
+
+    "axis": {
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "labelColor": "#666666",
+      "titleColor": "#555555"
+    },
+
+    "title": {
+      "font": "Arial",
+      "subtitleFont": "Arial"
+    }
+  }
+}

@@ -1,20 +1,28 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-  "width": 800,
-  "height": 600,
+  "width": "container",
+  "height": 500,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#f5f3ee",
 
   "title": {
     "text": "How Much Land Does Each State Protect?",
     "subtitle": "Share of each state or territory covered by terrestrial protected areas in CAPAD 2024",
     "anchor": "start",
-    "fontSize": 22,
-    "subtitleFontSize": 12,
+    "font": "Arial",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleFontWeight": "normal",
     "subtitleColor": "#666666"
-  },
-
-  "projection": {
-    "type": "equalEarth"
   },
 
   "data": {
@@ -35,7 +43,6 @@
         "key": "StateName",
         "fields": [
           "STATE",
-          "LandArea_ha",
           "ProtectedArea_ha",
           "ProtectedPercent"
         ]
@@ -43,35 +50,34 @@
     }
   ],
 
+  "projection": {
+    "type": "equalEarth"
+  },
+
   "layer": [
     {
       "mark": {
         "type": "geoshape",
-        "stroke": "#F8F6F0",
-        "strokeWidth": 1.5
+        "stroke": "#ffffff",
+        "strokeWidth": 1
       },
 
       "encoding": {
         "color": {
           "field": "ProtectedPercent",
           "type": "quantitative",
-          "title": "Protected land (%)",
-
+          "title": "Land protected (%)",
           "scale": {
-            "type": "threshold",
-            "domain": [10, 20, 30, 40, 50],
+            "domain": [0, 60],
             "range": [
-              "#E7EEE7",
-              "#C9DCCB",
-              "#9FBEA4",
-              "#709879",
-              "#496F57",
-              "#294D3A"
+              "#edf2eb",
+              "#55745f"
             ]
           },
-
           "legend": {
-            "title": "Protected land (%)"
+            "orient": "bottom",
+            "direction": "horizontal",
+            "title": "Land protected (%)"
           }
         },
 
@@ -85,106 +91,58 @@
             "field": "ProtectedPercent",
             "type": "quantitative",
             "title": "Protected land (%)",
-            "format": ".1f"
+            "format": ".2f"
           },
           {
             "field": "ProtectedArea_ha",
             "type": "quantitative",
             "title": "Protected area (ha)",
             "format": ",.0f"
-          },
-          {
-            "field": "LandArea_ha",
-            "type": "quantitative",
-            "title": "Total land area (ha)",
-            "format": ",.0f"
           }
         ]
       }
     },
 
     {
-      "data": {
-        "values": [
-          {
-            "longitude": 149.13,
-            "latitude": -35.28
-          }
-        ]
-      },
-
-      "mark": {
-        "type": "point",
-        "filled": true,
-        "size": 75,
-        "color": "#294D3A",
-        "stroke": "#FFFFFF",
-        "strokeWidth": 1
-      },
-
-      "encoding": {
-        "longitude": {
-          "field": "longitude",
-          "type": "quantitative"
-        },
-
-        "latitude": {
-          "field": "latitude",
-          "type": "quantitative"
+      "transform": [
+        {
+          "filter": "datum.STATE == 'ACT'"
         }
-      }
-    },
-
-    {
-      "data": {
-        "values": [
-          {
-            "longitude": 149.13,
-            "latitude": -35.28,
-            "label": "ACT  55.9% — highest share"
-          }
-        ]
-      },
+      ],
 
       "mark": {
         "type": "text",
-        "align": "left",
-        "baseline": "middle",
-        "dx": 12,
-        "dy": -8,
-        "fontSize": 12,
+        "fontSize": 10,
         "fontWeight": "bold",
-        "color": "#294D3A"
+        "dx": 35,
+        "dy": 3,
+        "color": "#405947"
       },
 
       "encoding": {
         "longitude": {
-          "field": "longitude",
-          "type": "quantitative"
+          "datum": 149.12
         },
 
         "latitude": {
-          "field": "latitude",
-          "type": "quantitative"
+          "datum": -35.30
         },
 
         "text": {
-          "field": "label"
+          "value": "ACT 55.9% — highest share"
         }
       }
     }
   ],
 
   "config": {
-    "background": "#F8F6F0",
-
     "view": {
       "stroke": null
     },
 
     "legend": {
-      "labelFontSize": 11,
-      "titleFontSize": 12
+      "labelFont": "Arial",
+      "titleFont": "Arial"
     }
   }
 }

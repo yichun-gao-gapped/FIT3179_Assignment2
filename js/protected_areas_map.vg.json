@@ -1,22 +1,28 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
 
-  "width": 800,
-  "height": 600,
+  "width": "container",
+  "height": 520,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
 
   "title": {
     "text": "Where Are Australia's Protected Areas?",
-    "subtitle": "Circle size represents protected area extent; colour shows IUCN management category",
+    "subtitle": "Circle size represents protected area extent; colour shows conservation management category",
     "anchor": "start",
-    "fontSize": 22,
-    "subtitleFontSize": 13,
+    "font": "Georgia",
+    "fontSize": 20,
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
     "subtitleColor": "#666666"
   },
 
   "projection": {
-    "type": "equalEarth",
-    "center": [134, -28],
-    "scale": 850
+    "type": "equalEarth"
   },
 
   "layer": [
@@ -39,15 +45,27 @@
 
     {
       "data": {
-        "url": "data/processed/capad_2024_points.csv"
+        "url": "data/processed/capad_2024_points.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "LONGITUDE": "number",
+            "LATITUDE": "number",
+            "GIS_AREA": "number"
+          }
+        }
       },
 
       "transform": [
         {
-          "filter": "isValid(datum.LONGITUDE) && isValid(datum.LATITUDE) && datum.GIS_AREA > 0"
+          "filter": "isValid(datum.LONGITUDE) && isValid(datum.LATITUDE) && datum.GIS_AREA >= 1000"
         },
         {
           "filter": "datum.LONGITUDE >= 112 && datum.LONGITUDE <= 154 && datum.LATITUDE >= -44 && datum.LATITUDE <= -10"
+        },
+        {
+          "calculate": "datum.IUCN == 'Ia' ? 'Strict reserve (Ia)' : datum.IUCN == 'Ib' ? 'Wilderness (Ib)' : datum.IUCN == 'II' ? 'National park (II)' : datum.IUCN == 'III' ? 'Natural monument (III)' : datum.IUCN == 'IV' ? 'Habitat management (IV)' : datum.IUCN == 'V' ? 'Protected landscape (V)' : datum.IUCN == 'VI' ? 'Sustainable use (VI)' : datum.IUCN == 'NA' ? 'Not applicable' : datum.IUCN == 'NAS' ? 'Not assigned' : 'Not reported'",
+          "as": "IUCN_Label"
         }
       ],
 
@@ -75,31 +93,35 @@
           "title": "Protected area (ha)",
           "scale": {
             "type": "sqrt",
-            "range": [3, 420]
+            "range": [3, 350]
           },
           "legend": {
+            "orient": "bottom",
+            "direction": "horizontal",
             "format": ".2s",
             "title": "Protected area (ha)"
           }
         },
 
         "color": {
-          "field": "IUCN",
+          "field": "IUCN_Label",
           "type": "nominal",
-          "title": "IUCN category",
+          "title": "Management category",
+
           "scale": {
             "domain": [
-              "Ia",
-              "Ib",
-              "II",
-              "III",
-              "IV",
-              "V",
-              "VI",
-              "NA",
-              "NAS",
-              "NR"
+              "Strict reserve (Ia)",
+              "Wilderness (Ib)",
+              "National park (II)",
+              "Natural monument (III)",
+              "Habitat management (IV)",
+              "Protected landscape (V)",
+              "Sustainable use (VI)",
+              "Not applicable",
+              "Not assigned",
+              "Not reported"
             ],
+
             "range": [
               "#355F4C",
               "#4F7D58",
@@ -115,7 +137,11 @@
           },
 
           "legend": {
-            "title": "IUCN category"
+            "orient": "bottom",
+            "direction": "horizontal",
+            "columns": 3,
+            "title": "Management category",
+            "labelLimit": 180
           }
         },
 
@@ -136,9 +162,9 @@
             "title": "Type"
           },
           {
-            "field": "IUCN",
+            "field": "IUCN_Label",
             "type": "nominal",
-            "title": "IUCN Category"
+            "title": "Management category"
           },
           {
             "field": "GOVERNANCE",
@@ -157,15 +183,29 @@
   ],
 
   "config": {
+    "font": "Arial",
+
     "background": "#F8F6F0",
 
     "view": {
       "stroke": null
     },
 
+    "title": {
+      "font": "Georgia",
+      "subtitleFont": "Arial"
+    },
+
+    "axis": {
+      "labelFont": "Arial",
+      "titleFont": "Arial"
+    },
+
     "legend": {
-      "labelFontSize": 11,
-      "titleFontSize": 12,
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 10,
+      "titleFontSize": 11,
       "symbolOpacity": 0.8
     }
   }

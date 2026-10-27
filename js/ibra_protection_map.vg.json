@@ -1,0 +1,159 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 450,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "title": {
+    "text": "Are Australia's Bioregions Equally Protected?",
+    "subtitle": "Share of each IBRA 7.1 bioregion covered by terrestrial protected areas in CAPAD 2024",
+    "anchor": "start",
+    "fontSize": 20,
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666666"
+  },
+
+  "projection": {
+    "type": "equalEarth"
+  },
+
+  "data": {
+    "url": "data/processed/ibra_regions.topojson",
+    "format": {
+      "type": "topojson",
+      "feature": "IBRA7_regions"
+    }
+  },
+
+  "transform": [
+    {
+      "lookup": "properties.REG_CODE_7",
+      "from": {
+        "data": {
+          "url": "data/processed/ibra_bioregions_summary.csv",
+          "format": {
+            "type": "csv",
+            "parse": {
+              "IBRA_Area_ha": "number",
+              "Protected_Area_ha": "number",
+              "Protected_Percent": "number",
+              "NRS_Contribution_Percent": "number"
+            }
+          }
+        },
+        "key": "IBRA_Code",
+        "fields": [
+          "IBRA_Name",
+          "Jurisdictions",
+          "IBRA_Area_ha",
+          "Protected_Area_ha",
+          "Protected_Percent",
+          "NRS_Contribution_Percent"
+        ]
+      }
+    }
+  ],
+
+  "mark": {
+    "type": "geoshape",
+    "stroke": "#F8F6F0",
+    "strokeWidth": 0.7
+  },
+
+  "encoding": {
+    "color": {
+      "field": "Protected_Percent",
+      "type": "quantitative",
+      "title": "Protected (%)",
+
+      "scale": {
+        "type": "threshold",
+        "domain": [5, 10, 20, 30, 50],
+        "range": [
+          "#F1F3ED",
+          "#DCE7D9",
+          "#BDD3BD",
+          "#91B595",
+          "#5F8E6A",
+          "#2E5B43"
+        ]
+      },
+
+      "legend": {
+        "orient": "bottom",
+        "direction": "horizontal",
+        "title": "Bioregion protected (%)",
+        "labelLimit": 120,
+        "titleLimit": 220
+      }
+    },
+
+    "tooltip": [
+      {
+        "field": "IBRA_Name",
+        "type": "nominal",
+        "title": "IBRA Bioregion"
+      },
+      {
+        "field": "properties.REG_CODE_7",
+        "type": "nominal",
+        "title": "IBRA Code"
+      },
+      {
+        "field": "Jurisdictions",
+        "type": "nominal",
+        "title": "Jurisdiction(s)"
+      },
+      {
+        "field": "Protected_Percent",
+        "type": "quantitative",
+        "title": "Protected (%)",
+        "format": ".1f"
+      },
+      {
+        "field": "Protected_Area_ha",
+        "type": "quantitative",
+        "title": "Protected area (ha)",
+        "format": ",.0f"
+      },
+      {
+        "field": "IBRA_Area_ha",
+        "type": "quantitative",
+        "title": "Bioregion area (ha)",
+        "format": ",.0f"
+      },
+      {
+        "field": "NRS_Contribution_Percent",
+        "type": "quantitative",
+        "title": "Contribution to NRS (%)",
+        "format": ".1f"
+      }
+    ]
+  },
+
+  "config": {
+    "background": "#F8F6F0",
+
+    "view": {
+      "stroke": null
+    },
+
+    "legend": {
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "labelFont": "Arial",
+      "titleFont": "Arial"
+    },
+
+    "title": {
+      "font": "Arial",
+      "subtitleFont": "Arial"
+    }
+  }
+}

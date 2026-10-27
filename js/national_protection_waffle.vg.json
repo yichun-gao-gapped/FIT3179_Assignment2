@@ -1,0 +1,156 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 250,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#f5f3ee",
+
+  "title": {
+    "text": "What Does 22.57% Protected Really Look Like?",
+    "subtitle": "Each square represents 1% of Australia's terrestrial land",
+    "anchor": "start",
+    "font": "Arial",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666"
+  },
+
+  "data": {
+    "sequence": {
+      "start": 0,
+      "stop": 100,
+      "step": 1,
+      "as": "Cell"
+    }
+  },
+
+  "transform": [
+    {
+      "calculate": "datum.Cell % 10",
+      "as": "Column"
+    },
+    {
+      "calculate": "floor(datum.Cell / 10)",
+      "as": "Row"
+    },
+    {
+      "calculate": "datum.Column + 0.86",
+      "as": "CellEnd"
+    },
+    {
+      "calculate": "datum.Row + 0.84",
+      "as": "RowEnd"
+    },
+    {
+      "calculate": "datum.Cell < 22 ? 1 : datum.Cell == 22 ? 0.57 : 0",
+      "as": "ProtectedFraction"
+    },
+    {
+      "calculate": "datum.Column + (0.86 * datum.ProtectedFraction)",
+      "as": "ProtectedEnd"
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "color": "#dedfd9",
+        "stroke": "#ffffff",
+        "strokeWidth": 1
+      },
+
+      "encoding": {
+        "x": {
+          "field": "Column",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 10]
+          },
+          "axis": null
+        },
+
+        "x2": {
+          "field": "CellEnd"
+        },
+
+        "y": {
+          "field": "Row",
+          "type": "quantitative",
+          "scale": {
+            "domain": [10, 0]
+          },
+          "axis": null
+        },
+
+        "y2": {
+          "field": "RowEnd"
+        }
+      }
+    },
+
+    {
+      "transform": [
+        {
+          "filter": "datum.ProtectedFraction > 0"
+        }
+      ],
+
+      "mark": {
+        "type": "rect",
+        "color": "#55745f",
+        "stroke": "#ffffff",
+        "strokeWidth": 1
+      },
+
+      "encoding": {
+        "x": {
+          "field": "Column",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 10]
+          }
+        },
+
+        "x2": {
+          "field": "ProtectedEnd"
+        },
+
+        "y": {
+          "field": "Row",
+          "type": "quantitative",
+          "scale": {
+            "domain": [10, 0]
+          }
+        },
+
+        "y2": {
+          "field": "RowEnd"
+        },
+
+        "tooltip": [
+          {
+            "datum": "22.57%",
+            "title": "Protected terrestrial land"
+          }
+        ]
+      }
+    }
+  ],
+
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

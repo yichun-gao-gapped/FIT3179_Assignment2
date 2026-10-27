@@ -1,0 +1,264 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 250,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#f5f3ee",
+
+  "title": {
+    "text": "Reserve Size Varies Sharply by Governance",
+    "subtitle": "Distribution of consolidated protected-area records by governance type",
+    "anchor": "start",
+    "font": "Arial",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleFontWeight": "normal",
+    "subtitleColor": "#666666"
+  },
+
+  "data": {
+    "url": "data/processed/governance_boxplot_summary.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Min": "number",
+        "Q1": "number",
+        "Median": "number",
+        "Q3": "number",
+        "Max": "number",
+        "Count": "number"
+      }
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#666666",
+        "strokeWidth": 1.5
+      },
+
+      "encoding": {
+        "y": {
+          "field": "Governance",
+          "type": "nominal",
+          "sort": [
+            "Community",
+            "Joint",
+            "Government",
+            "Private"
+          ],
+          "axis": {
+            "title": null
+          }
+        },
+
+        "x": {
+          "field": "Min",
+          "type": "quantitative",
+          "scale": {
+            "type": "log",
+            "domain": [
+              0.0001,
+              20000000
+            ]
+          },
+          "axis": {
+            "title": "GIS area (ha, logarithmic scale)",
+            "grid": true,
+            "gridColor": "#dedbd3",
+            "domain": false
+          }
+        },
+
+        "x2": {
+          "field": "Max"
+        }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "bar",
+        "height": 28,
+        "color": "#55745f"
+      },
+
+      "encoding": {
+        "y": {
+          "field": "Governance",
+          "type": "nominal",
+          "sort": [
+            "Community",
+            "Joint",
+            "Government",
+            "Private"
+          ]
+        },
+
+        "x": {
+          "field": "Q1",
+          "type": "quantitative",
+          "scale": {
+            "type": "log",
+            "domain": [
+              0.0001,
+              20000000
+            ]
+          }
+        },
+
+        "x2": {
+          "field": "Q3"
+        },
+
+        "tooltip": [
+          {
+            "field": "Governance",
+            "type": "nominal",
+            "title": "Governance"
+          },
+          {
+            "field": "Q1",
+            "type": "quantitative",
+            "title": "Q1 (ha)",
+            "format": ",.1f"
+          },
+          {
+            "field": "Median",
+            "type": "quantitative",
+            "title": "Median (ha)",
+            "format": ",.1f"
+          },
+          {
+            "field": "Q3",
+            "type": "quantitative",
+            "title": "Q3 (ha)",
+            "format": ",.1f"
+          }
+        ]
+      }
+    },
+
+    {
+      "mark": {
+        "type": "tick",
+        "orient": "vertical",
+        "color": "#ffffff",
+        "thickness": 3,
+        "size": 28
+      },
+
+      "encoding": {
+        "y": {
+          "field": "Governance",
+          "type": "nominal",
+          "sort": [
+            "Community",
+            "Joint",
+            "Government",
+            "Private"
+          ]
+        },
+
+        "x": {
+          "field": "Median",
+          "type": "quantitative",
+          "scale": {
+            "type": "log",
+            "domain": [
+              0.0001,
+              20000000
+            ]
+          }
+        }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "tick",
+        "orient": "vertical",
+        "color": "#555555",
+        "thickness": 1.5,
+        "size": 16
+      },
+
+      "encoding": {
+        "y": {
+          "field": "Governance",
+          "type": "nominal",
+          "sort": [
+            "Community",
+            "Joint",
+            "Government",
+            "Private"
+          ]
+        },
+
+        "x": {
+          "field": "Min",
+          "type": "quantitative",
+          "scale": {
+            "type": "log",
+            "domain": [
+              0.0001,
+              20000000
+            ]
+          }
+        }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "tick",
+        "orient": "vertical",
+        "color": "#555555",
+        "thickness": 1.5,
+        "size": 16
+      },
+
+      "encoding": {
+        "y": {
+          "field": "Governance",
+          "type": "nominal",
+          "sort": [
+            "Community",
+            "Joint",
+            "Government",
+            "Private"
+          ]
+        },
+
+        "x": {
+          "field": "Max",
+          "type": "quantitative",
+          "scale": {
+            "type": "log",
+            "domain": [
+              0.0001,
+              20000000
+            ]
+          }
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "view": {
+      "stroke": null
+    }
+  }
+}

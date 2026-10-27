@@ -1,0 +1,287 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": "container",
+  "height": 400,
+
+  "autosize": {
+    "type": "fit",
+    "contains": "padding",
+    "resize": true
+  },
+
+  "background": "#F8F6F0",
+
+  "title": {
+    "text": "How Far Are the Weakest Bioregions from 10%?",
+    "subtitle": "The 12 least-protected mainland and Tasmanian IBRA 7.1 bioregions",
+    "anchor": "start",
+    "font": "Georgia",
+    "fontSize": 20,
+    "fontWeight": "bold",
+    "subtitleFont": "Arial",
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666666"
+  },
+
+  "data": {
+    "url": "data/processed/protection_gap_priority.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Current_Protected_Percent": "number",
+        "Target_Percent": "number",
+        "Gap_Percentage_Points": "number",
+        "IBRA_Area_ha": "number",
+        "Protected_Area_ha": "number",
+        "Shortfall_to_10pct_ha": "number"
+      }
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeWidth": 2,
+        "color": "#D7C9B8"
+      },
+
+      "encoding": {
+        "y": {
+          "field": "IBRA_Name",
+          "type": "nominal",
+          "sort": {
+            "field": "Current_Protected_Percent",
+            "order": "ascending"
+          },
+          "axis": {
+            "title": null,
+            "labelLimit": 190
+          }
+        },
+
+        "x": {
+          "field": "Current_Protected_Percent",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 10.5]
+          },
+          "axis": {
+            "title": "Protected share of bioregion (%)",
+            "values": [0, 2, 4, 6, 8, 10],
+            "grid": true,
+            "gridColor": "#E2DFD6"
+          }
+        },
+
+        "x2": {
+          "field": "Target_Percent"
+        }
+      }
+    },
+
+    {
+      "mark": {
+        "type": "point",
+        "filled": true,
+        "size": 80
+      },
+
+      "encoding": {
+        "y": {
+          "field": "IBRA_Name",
+          "type": "nominal",
+          "sort": {
+            "field": "Current_Protected_Percent",
+            "order": "ascending"
+          }
+        },
+
+        "x": {
+          "field": "Current_Protected_Percent",
+          "type": "quantitative"
+        },
+
+        "color": {
+          "field": "Gap_Percentage_Points",
+          "type": "quantitative",
+          "title": "Gap to 10% (percentage points)",
+          "scale": {
+            "range": [
+              "#D9A06D",
+              "#9B4A2F"
+            ]
+          },
+          "legend": {
+            "orient": "bottom",
+            "direction": "horizontal"
+          }
+        },
+
+        "tooltip": [
+          {
+            "field": "IBRA_Name",
+            "type": "nominal",
+            "title": "Bioregion"
+          },
+          {
+            "field": "Jurisdictions",
+            "type": "nominal",
+            "title": "Jurisdiction(s)"
+          },
+          {
+            "field": "Current_Protected_Percent",
+            "type": "quantitative",
+            "title": "Currently protected (%)",
+            "format": ".1f"
+          },
+          {
+            "field": "Gap_Percentage_Points",
+            "type": "quantitative",
+            "title": "Gap to 10% (pp)",
+            "format": ".1f"
+          },
+          {
+            "field": "Shortfall_to_10pct_ha",
+            "type": "quantitative",
+            "title": "Area needed to reach 10% (ha)",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+
+    {
+      "mark": {
+        "type": "point",
+        "filled": false,
+        "size": 70,
+        "stroke": "#777777",
+        "strokeWidth": 1.5
+      },
+
+      "encoding": {
+        "y": {
+          "field": "IBRA_Name",
+          "type": "nominal",
+          "sort": {
+            "field": "Current_Protected_Percent",
+            "order": "ascending"
+          }
+        },
+
+        "x": {
+          "field": "Target_Percent",
+          "type": "quantitative"
+        }
+      }
+    },
+
+    {
+      "transform": [
+        {
+          "calculate": "format(datum.Current_Protected_Percent, '.1f')",
+          "as": "Label"
+        }
+      ],
+
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "bottom",
+        "dx": -7,
+        "dy": -4,
+        "font": "Arial",
+        "fontSize": 9,
+        "fontWeight": "bold",
+        "color": "#555555"
+      },
+
+      "encoding": {
+        "y": {
+          "field": "IBRA_Name",
+          "type": "nominal",
+          "sort": {
+            "field": "Current_Protected_Percent",
+            "order": "ascending"
+          }
+        },
+
+        "x": {
+          "field": "Current_Protected_Percent",
+          "type": "quantitative"
+        },
+
+        "text": {
+          "field": "Label"
+        }
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {
+            "x": 10,
+            "Label": "10% IBRA reporting reference"
+          }
+        ]
+      },
+
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "baseline": "top",
+        "font": "Arial",
+        "fontSize": 9,
+        "fontWeight": "bold",
+        "color": "#777777"
+      },
+
+      "encoding": {
+        "x": {
+          "field": "x",
+          "type": "quantitative"
+        },
+
+        "y": {
+          "value": 4
+        },
+
+        "text": {
+          "field": "Label"
+        }
+      }
+    }
+  ],
+
+  "config": {
+    "font": "Arial",
+
+    "view": {
+      "stroke": null
+    },
+
+    "title": {
+      "font": "Georgia",
+      "subtitleFont": "Arial"
+    },
+
+    "axis": {
+      "labelFont": "Arial",
+      "titleFont": "Arial",
+      "labelFontSize": 10,
+      "titleFontSize": 11,
+      "labelColor": "#555555",
+      "titleColor": "#444444",
+      "domain": false,
+      "ticks": false
+    },
+
+    "legend": {
+      "labelFont": "Arial",
+      "titleFont": "Arial"
+    }
+  }
+}
